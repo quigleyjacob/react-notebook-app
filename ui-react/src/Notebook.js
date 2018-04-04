@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import NotebookForm from './NotebookForm';
+import NotebookItem from './NotebookItem';
 
 const url = '/api/notebooks'
 
@@ -11,6 +12,12 @@ class Notebook extends Component {
     }
 
     this.addNotebook = this.addNotebook.bind(this);
+  }
+
+  componentWillMount() {
+    fetch(url)
+    .then((resp) => resp.json())
+    .then(notebooks => this.setState({notebooks: notebooks}));
   }
 
   addNotebook(val) {
@@ -39,10 +46,16 @@ class Notebook extends Component {
   }
 
   render() {
+    const notebooks = this.state.notebooks.map(n => (
+      <NotebookItem key={n._id} name={n.name} />
+    ))
     return (
       <div>
         <div> This is the Notebook</div>
         <NotebookForm addNotebook={this.addNotebook}/>
+        <ul>
+        {notebooks}
+        </ul>
       </div>
     );
   }

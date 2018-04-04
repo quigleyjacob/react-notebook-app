@@ -18,6 +18,6 @@ var notebookSchema = new mongoose.Schema({
     }
 });
 
-var Notebook = mongoose.model('Notebok', notebookSchema);
+var Notebook = mongoose.model('Notebook', notebookSchema);
 
 module.exports = Notebook;
