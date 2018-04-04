@@ -37,3 +37,6 @@ By Jacob Quigley
 
 ##### Creative Portion (20)
 20pt: TBD
+
+#### TA Approval
+Approved By: Connor Stevens
