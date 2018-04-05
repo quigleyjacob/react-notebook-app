@@ -80,12 +80,14 @@ class Text extends Component {
           {this.state.name}
         </div>
         <Toolbar />
-        <textarea
+        <div
         ref='doc'
         onChange={this.handleChange}
-        value={this.state.text}
         className="fileText"
-        />
+        contentEditable="true"
+        >
+        {this.state.text}
+        </div>
       </div>
     )
   }

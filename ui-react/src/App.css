@@ -34,6 +34,10 @@
   border: none;
   box-shadow: none;
   background-color: white;
+  overflow-y: scroll;
+  padding: 10px;
+  text-align: left;
+  white-space: pre-wrap;
 }
 
 .document {
