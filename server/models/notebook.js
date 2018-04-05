@@ -7,6 +7,7 @@ var notebookSchema = new mongoose.Schema({
     },
     body: {
       type: String,
+      default: 'Begin typing here...',
       last_updated: {
         type: Date,
         default: Date.now

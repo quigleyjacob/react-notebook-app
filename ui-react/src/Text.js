@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-const url = '/api/notebooks/'
+import './App.css';
+
+const url = '/api/notebooks/';
 
 class Text extends Component {
   constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       text: '',
       name: ''
     }
@@ -13,14 +15,6 @@ class Text extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.updateText = this.updateText.bind(this);
   }
-
-  // componentWillMount() {
-  //   alert("here");
-  //   if(this.props.id) {
-  //     alert("here 2");
-  //     this.getNotebookById(this.props.id);
-  //   }
-  // }
 
   componentWillReceiveProps(nextProps) {
     this.getNotebookById(nextProps.id);

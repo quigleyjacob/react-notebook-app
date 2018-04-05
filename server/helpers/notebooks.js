@@ -30,15 +30,15 @@ exports.getNotebook = function(req, res){
    })
 }
 
-// exports.updateNotebook =  function(req, res){
-//    db.Todo.findOneAndUpdate({_id: req.params.todoId}, req.body, {new: true})
-//    .then(function(todo){
-//        res.json(todo);
-//    })
-//    .catch(function(err){
-//        res.send(err);
-//    })
-// }
+exports.updateNotebook =  function(req, res){
+   db.Notebook.findOneAndUpdate({_id: req.params.notebookId}, req.body, {new: true})
+   .then(function(notebook){
+       res.json(notebook);
+   })
+   .catch(function(err){
+       res.send(err);
+   })
+}
 
 exports.deleteNotebook = function(req, res){
    db.Notebook.remove({_id: req.params.notebookId})

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 
-class Login extends Component {
+class Register extends Component {
   constructor() {
     super();
-    this.state = {email: '', password: ''};
+    this.state = {email: '', password: '', passwordConf: '', firstName: '', lastName: ''};
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -20,12 +20,13 @@ class Login extends Component {
       <div>
         <div className="ui main text container segment">
           <div className="ui huge header center aligned">
-            Login
+            Register
           </div>
           <form onSubmit={this.handleSubmit} className="ui form" method="post">
             <div className="ui one column stackable center aligned page grid">
               <div className="column twelve wide">
-                <input maxLength="40" type="email" name="email" placeholder="Enter Email here" required/>              </div>
+                <input maxLength="40" type="text" name="email" placeholder="Enter Email here" required/>
+              </div>
               <div className="column twelve wide">
                 <input maxLength="20" type="password" name="password" placeholder="Enter Password here" required/>
               </div>
@@ -40,4 +41,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default Register;

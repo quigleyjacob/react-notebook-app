@@ -9,6 +9,7 @@ router.route('/')
 
 router.route('/:notebookId')
   .get(helpers.getNotebook)
+  .put(helpers.updateNotebook)
   .delete(helpers.deleteNotebook)
 
 module.exports = router;
