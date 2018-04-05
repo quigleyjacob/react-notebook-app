@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import NotebookForm from './NotebookForm';
 import NotebookItem from './NotebookItem';
 
-const url = '/api/notebooks'
+const url = '/api/notebooks/'
 
 class Notebook extends Component {
   constructor(props) {
@@ -28,26 +28,29 @@ class Notebook extends Component {
       }),
       body: JSON.stringify({name: val})
     })
-    .then(resp => {
-      if(!resp.ok) {
-        if (resp.status >= 400 && resp.status < 500) {
-          return resp.json().then(data => {
-            let err = {errorMessage: data.message};
-            throw err;
-          })
-        } else {
-          let err = {errorMessage: "Please try again later"};
-          throw err;
-        }
-      }
-      return resp.json();
-    })
+    .then(resp => resp.json())
     .then(newNotebook => this.setState({notebooks: [...this.state.notebooks, newNotebook]}));
+  }
+
+  deleteNotebook(id) {
+    const notebooks = this.state.notebooks.filter(notebook => notebook._id !== id);
+    fetch(url + id, {method: "delete"})
+    .then(resp => resp.json())
+    .then(this.setState({notebooks: notebooks}))
+  }
+
+  getId(id) {
+    this.props.onOpen(id);
   }
 
   render() {
     const notebooks = this.state.notebooks.map(n => (
-      <NotebookItem key={n._id} name={n.name} />
+      <NotebookItem
+      key={n._id}
+      name={n.name}
+      onDelete={this.deleteNotebook.bind(this, n._id)}
+      onClick={this.getId.bind(this, n._id)}
+      />
     ))
     return (
       <div>
