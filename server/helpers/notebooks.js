@@ -3,7 +3,8 @@ var db = require('../models');
 exports.getNotebooks = function(req, res){
     db.Notebook.find()
     .then(function(notebooks){
-        res.json(notebooks);
+        let myNotebooks = notebooks.filter(notebook => notebook.userId === req.query.q);
+        res.json(myNotebooks);
     })
     .catch(function(err){
         res.send(err);

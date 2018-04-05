@@ -15,7 +15,7 @@ class Notebook extends Component {
   }
 
   componentWillMount() {
-    fetch(url)
+    fetch(url+"?q="+this.props.cookie(document.cookie).id)
     .then((resp) => resp.json())
     .then(notebooks => this.setState({notebooks: notebooks}));
   }
@@ -26,7 +26,7 @@ class Notebook extends Component {
       headers: new Headers({
         'Content-Type': 'application/json'
       }),
-      body: JSON.stringify({name: val})
+      body: JSON.stringify({name: val, userId: this.props.cookie(document.cookie).id})
     })
     .then(resp => resp.json())
     .then(newNotebook => this.setState({notebooks: [...this.state.notebooks, newNotebook]}));

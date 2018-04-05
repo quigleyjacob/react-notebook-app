@@ -16,6 +16,10 @@ var notebookSchema = new mongoose.Schema({
     created_date: {
         type: Date,
         default: Date.now
+    },
+    userId: {
+      type: String,
+      required: true
     }
 });
 

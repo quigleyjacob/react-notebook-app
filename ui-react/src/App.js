@@ -67,7 +67,7 @@ class App extends Component {
   loggedIn() {
     return (
       <div className="App">
-        <Notebook onOpen={this.getOpen.bind(this)}/>
+        <Notebook onOpen={this.getOpen.bind(this)} cookie={this.cookieToJSON}/>
         <Text id={this.state.idOfOpen}/>
       </div>
     );
