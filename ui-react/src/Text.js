@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
+import Toolbar from './Toolbar';
 
 const url = '/api/notebooks/';
 
@@ -74,12 +75,17 @@ class Text extends Component {
   render() {
     return (
       <div>
-      <textarea
-      ref='doc'
-      onChange={this.handleChange}
-      value={this.state.text}
-      />
-      <p>{this.state.name}</p>
+
+        <div className="ui huge header centered aligned title">
+          {this.state.name}
+        </div>
+        <Toolbar />
+        <textarea
+        ref='doc'
+        onChange={this.handleChange}
+        value={this.state.text}
+        className="fileText"
+        />
       </div>
     )
   }

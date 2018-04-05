@@ -12,11 +12,16 @@ class App extends Component {
     this.state = {
       isReturning: true,
       isLoggedIn: false,
+      nameOfOpen: '',
       idOfOpen: ''
     }
 
     this.toggleLoginRegister = this.toggleLoginRegister.bind(this);
     this.toggleLogin = this.toggleLogin.bind(this);
+    this.loginPage = this.loginPage.bind(this);
+    this.registerPage = this.registerPage.bind(this);
+    this.logout = this.logout.bind(this);
+    this.getUsername = this.getUsername.bind(this);
   }
   componentDidMount() {
     this.setState({
@@ -60,24 +65,58 @@ class App extends Component {
   isReturning() {
     return (
       <div className="App">
-        <Login toggle={this.toggleLoginRegister} login={this.toggleLogin}/>
+        <Login toggle={this.toggleLoginRegister} login={this.toggleLogin} name={this.getUsername}/>
       </div>
     );
   }
   loggedIn() {
     return (
-      <div className="App">
+      <div className="App ui celled grid">
+        <div className="four wide column">
         <Notebook onOpen={this.getOpen.bind(this)} cookie={this.cookieToJSON}/>
-        <Text id={this.state.idOfOpen}/>
+        </div>
+        <div className="twelve wide column document">
+          <Text id={this.state.idOfOpen}/>
+        </div>
       </div>
     );
+  }
+  loginPage() {
+    this.setState({
+      isLoggedIn: false,
+      isReturning: true
+    })
+  }
+  registerPage() {
+    this.setState({
+      isLoggedIn: false,
+      isReturning: false
+    })
+  }
+  logout() {
+    document.cookie = 'id=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    this.setState({
+      isLoggedIn: false,
+      isReturning: true
+    })
+  }
+  getUsername(name) {
+    this.setState({
+      nameOfOpen: name
+    })
   }
 
   render() {
     const showApp = this.state.isLoggedIn ? this.loggedIn() : (this.state.isReturning ? this.isReturning() : this.isNew());
     return (
       <div>
-        <Nav isLoggedIn={this.state.isLoggedIn}/>
+        <Nav
+        isLoggedIn={this.state.isLoggedIn}
+        login={this.loginPage}
+        register={this.registerPage}
+        logout={this.logout}
+        showUser={this.state.nameOfOpen}
+        />
         {showApp}
       </div>
     );

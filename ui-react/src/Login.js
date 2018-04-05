@@ -29,6 +29,7 @@ class Login extends Component {
     .then(resp => {
       if(resp.message === "success") {
         document.cookie = "id="+resp.id+";";
+        this.props.name(resp.name);
         this.props.login();
       } else {
         alert(resp.message);
@@ -48,7 +49,7 @@ class Login extends Component {
               <input maxLength="40" type="email" name="email" placeholder="Email Address" required/>
             </div>
             <div className="field">
-              <input maxLength="20" type="password" name="password" placeholder="Password" required/>
+              <input minLength="5" maxLength="20" type="password" name="password" placeholder="Password" required/>
             </div>
             <button className="ui primary basic button fluid">Login</button>
           </form>

@@ -6,8 +6,8 @@ class Nav extends Component {
   notLoggedIn() {
     return (
       <div className="right menu" id="right-menu">
-        <a className="item" id="login-nav-btn">Login</a>
-        <a className="item" id="register-nav-btn">Register</a>
+        <a className="item" onClick={this.props.login}>Login</a>
+        <a className="item" onClick={this.props.register}>Register</a>
       </div>
     );
   }
@@ -15,8 +15,8 @@ class Nav extends Component {
   loggedIn() {
     return (
       <div className="right menu" id="right-menu">
-        <a className="item" id="profile.btn">Username</a>
-        <a className="item" id="logout-btn">Logout</a>
+        <a className="item" >{this.props.showUser}</a>
+        <a className="item" onClick={this.props.logout}>Logout</a>
       </div>
     );
   }

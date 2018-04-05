@@ -45,20 +45,20 @@ class Notebook extends Component {
 
   render() {
     const notebooks = this.state.notebooks.map(n => (
-      <NotebookItem
-      key={n._id}
-      name={n.name}
-      onDelete={this.deleteNotebook.bind(this, n._id)}
-      onClick={this.getId.bind(this, n._id)}
-      />
+          <NotebookItem
+          key={n._id}
+          name={n.name}
+          onDelete={this.deleteNotebook.bind(this, n._id)}
+          onClick={this.getId.bind(this, n._id)}
+          />
     ))
     return (
       <div>
-        <div> This is the Notebook</div>
         <NotebookForm addNotebook={this.addNotebook}/>
-        <ul>
-        {notebooks}
-        </ul>
+        <hr />
+        <div>
+          {notebooks}
+        </div>
       </div>
     );
   }

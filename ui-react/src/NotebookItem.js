@@ -1,12 +1,13 @@
 import React from 'react';
+import './App.css'
 
 const NotebookItem = ({name, onDelete, onClick}) => (
-  <li>
-    <span onClick={onClick}>
+  <div
+  onClick={onClick}
+  className="notebook">
     {name}
-    </span>
-    <span onClick={onDelete}> X </span>
-  </li>
+    <span className="delete" onClick={onDelete}> <span className="ui mini inverted red button">X</span> </span>
+  </div>
 )
 
 export default NotebookItem;

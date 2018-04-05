@@ -28,7 +28,7 @@ exports.loginUser = function(req, res) {
         res.json({"message": err});
       } else {
         if (response) {
-          res.json({"message": "success", id: resp._id});
+          res.json({"message": "success", id: resp._id, name: resp.firstName});
         } else {
           res.json({"message": "Incorrect password"});
         }

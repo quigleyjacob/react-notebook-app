@@ -23,13 +23,17 @@ class NotebookForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input
-        type='text'
-        value={this.state.inputValue}
-        onChange={this.handleChange}
-        />
-        <button>Add New Notebook</button>
+      <form className="ui form" onSubmit={this.handleSubmit}>
+        <div className="field">
+          <input
+          type='text'
+          value={this.state.inputValue}
+          onChange={this.handleChange}
+          placeholder="Add new notebook"
+          />
+        </div>
+
+        <button className="ui button tiny fluid">Add New Notebook</button>
       </form>
     )
   }
