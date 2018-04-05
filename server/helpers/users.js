@@ -19,6 +19,25 @@ exports.createUser = function(req, res){
   }
 }
 
+exports.loginUser = function(req, res) {
+  db.User.findOne({email: req.body.email})
+  .then(resp => {
+    (resp !== null) ?
+    bcrypt.compare(req.body.password, resp.password, function(err, response) {
+      if(err) {
+        res.json({"message": err});
+      } else {
+        if (response) {
+          res.json({"message": "success", id: resp._id});
+        } else {
+          res.json({"message": "Incorrect password"});
+        }
+      }
+    })
+    : res.json({"message": "No user associated with that email"});
+  })
+}
+
 exports.getUser = function(req, res){
    db.User.findById(req.params.userId)
    .then(function(foundUser){

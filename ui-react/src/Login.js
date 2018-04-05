@@ -12,7 +12,28 @@ class Login extends Component {
     this.setState({
       email: e.target.email.value,
       password: e.target.password.value
+    }, () => {
+      this.loginUser(this.state);
     });
+  }
+
+  loginUser(obj) {
+    fetch('/api/users/login', {
+      method: "post",
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify(obj)
+    })
+    .then(resp => resp.json())
+    .then(resp => {
+      if(resp.message === "success") {
+        document.cookie = "id="+resp.id+";";
+        this.props.login();
+      } else {
+        alert(resp.message);
+      }
+    })
   }
 
   render() {

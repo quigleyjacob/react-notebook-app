@@ -16,7 +16,22 @@ class App extends Component {
     }
 
     this.toggleLoginRegister = this.toggleLoginRegister.bind(this);
-
+    this.toggleLogin = this.toggleLogin.bind(this);
+  }
+  componentDidMount() {
+    this.setState({
+      isLoggedIn: this.cookieToJSON(document.cookie).id ? true : false
+    })
+  }
+  //https://stackoverflow.com/questions/5047346/converting-strings-like-document-cookie-to-objects
+ cookieToJSON(str) {
+  	str = str.split('; ');
+  	var result = {};
+  	for(var i = 0; i < str.length; i++) {
+  		var cur = str[i].split('=');
+  		result[cur[0]] = cur[1];
+  	}
+  	return result;
   }
 
   getOpen(id) { //returns the id of the currently opened notebook
@@ -27,6 +42,11 @@ class App extends Component {
   toggleLoginRegister() {
     this.setState({
       isReturning: !this.state.isReturning
+    })
+  }
+  toggleLogin() {
+    this.setState({
+      isLoggedIn: !this.state.isLoggedIn
     })
   }
 
@@ -40,7 +60,7 @@ class App extends Component {
   isReturning() {
     return (
       <div className="App">
-        <Login toggle={this.toggleLoginRegister}/>
+        <Login toggle={this.toggleLoginRegister} login={this.toggleLogin}/>
       </div>
     );
   }
@@ -51,9 +71,6 @@ class App extends Component {
         <Text id={this.state.idOfOpen}/>
       </div>
     );
-  }
-  loginUser() {
-
   }
 
   render() {

@@ -10,4 +10,7 @@ router.route('/:userId')
   .get(helpers.getUser)
   .put(helpers.updateUser)
 
+router.route('/login')
+  .post(helpers.loginUser)
+
 module.exports = router;
