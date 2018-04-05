@@ -14,25 +14,33 @@ class App extends Component {
       isLoggedIn: false,
       idOfOpen: ''
     }
+
+    this.toggleLoginRegister = this.toggleLoginRegister.bind(this);
+
   }
 
-  getOpen(id) {
+  getOpen(id) { //returns the id of the currently opened notebook
     this.setState({
       idOfOpen: id
+    })
+  }
+  toggleLoginRegister() {
+    this.setState({
+      isReturning: !this.state.isReturning
     })
   }
 
   isNew() {
     return (
       <div className="App">
-        <Register />
+        <Register toggle={this.toggleLoginRegister}/>
       </div>
     );
   }
   isReturning() {
     return (
       <div className="App">
-        <Login />
+        <Login toggle={this.toggleLoginRegister}/>
       </div>
     );
   }
@@ -43,6 +51,9 @@ class App extends Component {
         <Text id={this.state.idOfOpen}/>
       </div>
     );
+  }
+  loginUser() {
+
   }
 
   render() {

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 
 class Login extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {email: '', password: ''};
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -23,17 +23,16 @@ class Login extends Component {
             Login
           </div>
           <form onSubmit={this.handleSubmit} className="ui form" method="post">
-            <div className="ui one column stackable center aligned page grid">
-              <div className="column twelve wide">
-                <input maxLength="40" type="email" name="email" placeholder="Enter Email here" required/>              </div>
-              <div className="column twelve wide">
-                <input maxLength="20" type="password" name="password" placeholder="Enter Password here" required/>
-              </div>
-              <div className="column twelve wide">
-                <button className="ui primary basic button fluid">Login</button>
-              </div>
+            <div className="field">
+              <input maxLength="40" type="email" name="email" placeholder="Email Address" required/>
             </div>
+            <div className="field">
+              <input maxLength="20" type="password" name="password" placeholder="Password" required/>
+            </div>
+            <button className="ui primary basic button fluid">Login</button>
           </form>
+          <br />
+          <a href="#Register" onClick={this.props.toggle}>Dont have an account? Register here</a>
         </div>
       </div>
     );
