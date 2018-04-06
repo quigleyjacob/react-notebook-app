@@ -13,6 +13,7 @@ class Login extends Component {
       email: e.target.email.value,
       password: e.target.password.value
     }, () => {
+      document.getElementById("login_form").reset();
       this.loginUser(this.state);
     });
   }
@@ -44,7 +45,7 @@ class Login extends Component {
           <div className="ui huge header center aligned">
             Login
           </div>
-          <form onSubmit={this.handleSubmit} className="ui form" method="post">
+          <form id="login_form" onSubmit={this.handleSubmit} className="ui form" method="post">
             <div className="field">
               <input maxLength="40" type="email" name="email" placeholder="Email Address" required/>
             </div>

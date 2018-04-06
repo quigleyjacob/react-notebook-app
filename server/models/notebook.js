@@ -13,6 +13,8 @@ var notebookSchema = new mongoose.Schema({
         default: Date.now
       }
     },
+    notes: [
+    ],
     created_date: {
         type: Date,
         default: Date.now

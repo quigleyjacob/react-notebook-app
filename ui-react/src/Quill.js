@@ -1,52 +1,38 @@
 import React, {Component} from 'react';
 import ReactQuill from 'react-quill';
-// import 'react-quill/dist/quill.snow.css';
 
 const url = '/api/notebooks/';
+const noteURL = '/api/notes/';
 
 class Quill extends Component {
   constructor(props) {
     super(props)
-    this.state = { text: '', name: '' }
+    this.state = { text: ''}
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(value) {
     this.setState({ text: value }, () => {
-      this.updateText(this.props.id);
+      this.updateText(this.props.noteId);
     })
   }
 
   componentWillReceiveProps(nextProps) {
-    this.getNotebookById(nextProps.id);
+    this.getNoteById(nextProps.noteId);
   }
 
-  getNotebookById(id) {
-    fetch(url + id)
-    .then(resp => {
-      if(!resp.ok) {
-        if (resp.status >= 400 && resp.status < 500) {
-          return resp.json().then(data => {
-            let err = {errorMessage: data.message};
-            throw err;
-          })
-        } else {
-          let err = {errorMessage: "Please try again later"};
-          throw err;
-        }
-      }
-      return resp.json();
-    })
+  getNoteById(id) {
+    fetch(noteURL + id)
+    .then(resp => resp.json())
     .then(found => {
-      // console.log(found)
       if(found !== null) {
-        this.setState({text: found.body, name: found.name})
+        this.setState({text: found.body})
       }
     })
   }
 
   updateText(id) {
-    fetch(url + id, {
+    fetch(noteURL + id, {
       method: "put",
       headers: new Headers({
         'Content-Type': 'application/json'
@@ -72,9 +58,6 @@ class Quill extends Component {
   render() {
     return (
       <div>
-        <div className="ui huge header centered aligned title">
-          {this.state.name}
-        </div>
         <ReactQuill
         value={this.state.text}
         onChange={this.handleChange}

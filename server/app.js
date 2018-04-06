@@ -5,6 +5,7 @@ var express = require('express'),
 
 var notebookRoutes = require("./routes/notebooks");
 var userRoutes = require('./routes/users');
+var noteRoutes = require('./routes/notes');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -21,6 +22,7 @@ app.get('/api/hello', function(req, res) {
 
 app.use('/api/notebooks', notebookRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/notes', noteRoutes);
 
 app.listen(8000, function(){
     console.log("APP IS RUNNING ON PORT 8000");

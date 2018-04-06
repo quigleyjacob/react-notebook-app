@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Form} from "semantic-ui-react";
 
 class NotebookForm extends Component {
   constructor(props) {
@@ -19,22 +20,23 @@ class NotebookForm extends Component {
   handleSubmit(e) {
     e.preventDefault();
     this.props.addNotebook(this.state.inputValue);
+    document.getElementById("notebook_form").reset();
   }
 
   render() {
     return (
-      <form className="ui form" onSubmit={this.handleSubmit}>
-        <div className="field">
-          <input
-          type='text'
-          value={this.state.inputValue}
-          onChange={this.handleChange}
-          placeholder="Add new notebook"
-          />
-        </div>
+      <Form id="notebook_form" className="ui form" onSubmit={this.handleSubmit}>
+      <Form.Field>
+      <input
+        type='text'
+        value={this.state.inputValue}
+        onChange={this.handleChange}
+        placeholder="Add new notebook"
+        maxLength="20"
+        />
+      </Form.Field>
+      </Form>
 
-        <button className="ui button tiny fluid">Add New Notebook</button>
-      </form>
     )
   }
 }

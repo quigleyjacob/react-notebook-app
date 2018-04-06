@@ -13,7 +13,7 @@ class App extends Component {
       isReturning: true,
       isLoggedIn: false,
       nameOfOpen: '',
-      idOfOpen: ''
+      idOfOpenNote: ''
     }
 
     this.toggleLoginRegister = this.toggleLoginRegister.bind(this);
@@ -39,9 +39,9 @@ class App extends Component {
   	return result;
   }
 
-  getOpen(id) { //returns the id of the currently opened notebook
+  getNoteOpen(id) {//returns is of opened note
     this.setState({
-      idOfOpen: id
+      idOfOpenNote: id
     })
   }
   toggleLoginRegister() {
@@ -73,10 +73,10 @@ class App extends Component {
     return (
       <div className="App ui celled grid">
         <div className="four wide column">
-        <Notebook onOpen={this.getOpen.bind(this)} cookie={this.cookieToJSON}/>
+        <Notebook onNoteOpen={this.getNoteOpen.bind(this)} cookie={this.cookieToJSON}/>
         </div>
         <div className="twelve wide column document">
-          <Quill id={this.state.idOfOpen}/>
+          <Quill noteId={this.state.idOfOpenNote}/>
         </div>
       </div>
     );

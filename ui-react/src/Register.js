@@ -16,6 +16,7 @@ class Register extends Component {
       firstName: e.target.firstName.value,
       lastName: e.target.lastName.value
     }, () => {
+      document.getElementById("register_form").reset();
       this.registerUser(this.state);
     });
   }
@@ -37,7 +38,6 @@ class Register extends Component {
           alert(resp.message);
         }
       } else {
-        document.getElementById("register_form").reset();
         this.props.toggle();
       }
     })

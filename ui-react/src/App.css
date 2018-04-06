@@ -1,6 +1,6 @@
 .App {
   margin-top: 50px;
-  text-align: center;
+  /* text-align: center; */
 }
 
 .ql-editor {
@@ -25,18 +25,20 @@
 }
 
 .notebook {
-  height: 40px;
-  font-size: 20px;
+  height: 20px;
+  font-size: 15px;
   line-height: 40px;
   text-align:left;
+  overflow: visible;
 }
-.ui.mini.inverted.button {
+.remove.icon {
   line-height: 10px;
-  padding: 7px;
+  padding-top: 15px;
+  float: right;
   vertical-align: middle;
   display: none;
 }
 
-.notebook:hover .ui.mini.inverted {
+.notebook:hover .remove.icon {
   display: inline-block;
 }
