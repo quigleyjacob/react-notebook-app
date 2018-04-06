@@ -31,14 +31,23 @@
   text-align:left;
   overflow: visible;
 }
+
+div.title {
+  text-overflow: ellipsis;
+}
+
+span.title {
+  width: 30px;
+  text-overflow: ellipsis;
+}
 .remove.icon {
   line-height: 10px;
-  padding-top: 15px;
+  padding-top: 5px;
   float: right;
   vertical-align: middle;
   display: none;
 }
 
-.notebook:hover .remove.icon {
+div.title:hover .remove.icon {
   display: inline-block;
 }

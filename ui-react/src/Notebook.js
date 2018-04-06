@@ -93,6 +93,14 @@ class Notebook extends Component {
     this.props.onNoteOpen(id)
   }
 
+  deleteNote(id) {
+
+    const notes = this.state.notes.filter(note => note._id !== id);
+    fetch(noteURL + id, {method: "delete"})
+    .then(resp => resp.json())
+    .then(this.setState({notes: notes}))
+  }
+
   render() {
     const { activeIndex } = this.state;
       const notebooks = this.state.notebooks.map((n, index) => {
@@ -101,9 +109,11 @@ class Notebook extends Component {
             <List.Item
             as='a'
             key={k._id}
-            onClick={this.getNoteId.bind(this, k._id)}
             >
+            <span onClick={this.getNoteId.bind(this, k._id)}>
             {k.name}
+            </span>
+            <i onClick={this.deleteNote.bind(this, k._id)} className="remove icon"></i>
             </List.Item>);
         });
         return (  <span key={n._id}>

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import ReactQuill from 'react-quill';
 
-const url = '/api/notebooks/';
 const noteURL = '/api/notes/';
 
 class Quill extends Component {
