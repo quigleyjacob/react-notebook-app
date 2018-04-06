@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
 import Notebook from './Notebook'
-import Text from './Text';
 import Nav from './Nav';
 import Login from './Login';
 import Register from './Register';
+import Quill from './Quill'
 
 class App extends Component {
   constructor(props) {
@@ -76,7 +76,7 @@ class App extends Component {
         <Notebook onOpen={this.getOpen.bind(this)} cookie={this.cookieToJSON}/>
         </div>
         <div className="twelve wide column document">
-          <Text id={this.state.idOfOpen}/>
+          <Quill id={this.state.idOfOpen}/>
         </div>
       </div>
     );

@@ -1,30 +1,48 @@
 import React, {Component} from 'react';
-import './App.css';
-import Toolbar from './Toolbar';
+import ReactQuill from 'react-quill';
+// import 'react-quill/dist/quill.snow.css';
 
 const url = '/api/notebooks/';
 
-class Text extends Component {
+class Quill extends Component {
   constructor(props) {
-    super(props);
-    this.state = {
-      text: '',
-      name: ''
-    }
-
-    this.getNotebookById = this.getNotebookById.bind(this);
+    super(props)
+    this.state = { text: '', name: '' }
     this.handleChange = this.handleChange.bind(this);
-    this.updateText = this.updateText.bind(this);
+  }
+
+  handleChange(value) {
+    this.setState({ text: value }, () => {
+      this.updateText(this.props.id);
+    })
   }
 
   componentWillReceiveProps(nextProps) {
     this.getNotebookById(nextProps.id);
   }
 
-  handleChange(e) {
-    this.setState({text: e.target.value}, () => {
-      this.updateText(this.props.id);
-    });
+  getNotebookById(id) {
+    fetch(url + id)
+    .then(resp => {
+      if(!resp.ok) {
+        if (resp.status >= 400 && resp.status < 500) {
+          return resp.json().then(data => {
+            let err = {errorMessage: data.message};
+            throw err;
+          })
+        } else {
+          let err = {errorMessage: "Please try again later"};
+          throw err;
+        }
+      }
+      return resp.json();
+    })
+    .then(found => {
+      // console.log(found)
+      if(found !== null) {
+        this.setState({text: found.body, name: found.name})
+      }
+    })
   }
 
   updateText(id) {
@@ -51,46 +69,19 @@ class Text extends Component {
     })
   }
 
-  getNotebookById(id) {
-    fetch(url + id)
-    .then(resp => {
-      if(!resp.ok) {
-        if (resp.status >= 400 && resp.status < 500) {
-          return resp.json().then(data => {
-            let err = {errorMessage: data.message};
-            throw err;
-          })
-        } else {
-          let err = {errorMessage: "Please try again later"};
-          throw err;
-        }
-      }
-      return resp.json();
-    })
-    .then(found => (
-      this.setState({text: found.body, name: found.name})
-    ))
-  }
-
   render() {
     return (
       <div>
-
         <div className="ui huge header centered aligned title">
           {this.state.name}
         </div>
-        <Toolbar />
-        <div
-        ref='doc'
+        <ReactQuill
+        value={this.state.text}
         onChange={this.handleChange}
-        className="fileText"
-        contentEditable="true"
-        >
-        {this.state.text}
-        </div>
+        />
       </div>
     )
   }
 }
 
-export default Text;
+export default Quill;
