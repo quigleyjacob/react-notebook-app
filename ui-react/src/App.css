@@ -47,6 +47,13 @@ span.title {
   vertical-align: middle;
   display: none;
 }
+.pencil.icon {
+  line-height: 10px;
+  padding-top: 5px;
+  float: right;
+  vertical-align: middle;
+  display: none;
+}
 
 div.title:hover .remove.icon {
   display: inline-block;

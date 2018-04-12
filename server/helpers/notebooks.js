@@ -47,7 +47,7 @@ exports.deleteNotebook = function(req, res){
        res.json({message: 'We deleted it!'});
    })
    .catch(function(err){
-       res.send(err);
+       res.json({message: err});
    })
 }
 

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import NotebookForm from './NotebookForm';
 import NotebookItem from './NotebookItem';
 import {Accordion, Icon, Form, List} from 'semantic-ui-react';
+import DeleteModal from './DeleteModal';
 
 const notebookURL = '/api/notebooks/'
 const noteURL = '/api/notes/'
@@ -14,13 +15,17 @@ class Notebook extends Component {
       activeIndex: '',
       notebookId: '',
       noteForm: '',
-      notes: []
+      notes: [],
+      modal: false,
+      deleteId: ''
     }
 
     this.addNotebook = this.addNotebook.bind(this);
     this.addNote = this.addNote.bind(this);
     this.handleNoteFormValueChange = this.handleNoteFormValueChange.bind(this);
     this.getNotes = this.getNotes.bind(this);
+    this.closeDeleteModal = this.closeDeleteModal.bind(this);
+    this.deleteNote = this.deleteNote.bind(this);
   }
 
   componentWillMount() {
@@ -54,6 +59,7 @@ class Notebook extends Component {
     fetch(notebookURL + id, {method: "delete"})
     .then(resp => resp.json())
     .then(this.setState({notebooks: notebooks}))
+    this.closeDeleteModal();
   }
 
   getNotebookId(id) {
@@ -94,11 +100,24 @@ class Notebook extends Component {
   }
 
   deleteNote(id) {
-
     const notes = this.state.notes.filter(note => note._id !== id);
     fetch(noteURL + id, {method: "delete"})
     .then(resp => resp.json())
     .then(this.setState({notes: notes}))
+  }
+
+  renderDeleteModal(id) {
+    this.setState({
+      modal: true,
+      deleteId: id
+    })
+  }
+
+  closeDeleteModal() {
+    this.setState({
+      modal: false,
+      deleteId: ''
+    })
   }
 
   render() {
@@ -109,11 +128,14 @@ class Notebook extends Component {
             <List.Item
             as='a'
             key={k._id}
+            className="note"
             >
             <span onClick={this.getNoteId.bind(this, k._id)}>
             {k.name}
             </span>
+
             <i onClick={this.deleteNote.bind(this, k._id)} className="remove icon"></i>
+            <i className="pencil icon"></i>
             </List.Item>);
         });
         return (  <span key={n._id}>
@@ -121,7 +143,7 @@ class Notebook extends Component {
               <Icon onClick={this.getNotes.bind(this, n._id)} name='dropdown' />
               <NotebookItem
               name={n.name}
-              onDelete={this.deleteNotebook.bind(this, n._id)}
+              onDelete={this.renderDeleteModal.bind(this, n._id)}
               onClick={this.getNotes.bind(this, n._id)}
               />
             </Accordion.Title>
@@ -144,6 +166,7 @@ class Notebook extends Component {
       <Accordion styled>
       {notebooks}
       </Accordion>
+      <DeleteModal modal={this.state.modal} close={this.closeDeleteModal.bind(this)} deleteNotebook={this.deleteNotebook.bind(this)} deleteId={this.state.deleteId}/>
       </div>
     )
   }
