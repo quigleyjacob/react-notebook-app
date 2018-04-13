@@ -7,10 +7,10 @@ class DeleteModal extends Component {
     return (
       <Modal size='mini' open={this.props.modal} onClose={this.props.close}>
           <Modal.Header>
-            Delete Your Account
+            Delete your Notebook
           </Modal.Header>
           <Modal.Content>
-            <p>Are you sure you want to delete this?</p>
+            <p>Are you sure you want to delete this notebook?</p>
           </Modal.Content>
           <Modal.Actions>
             <Button negative onClick={this.props.close}>

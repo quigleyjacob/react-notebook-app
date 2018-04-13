@@ -7,6 +7,7 @@ const NotebookItem = ({name, onDelete, onClick}) => (
   className="title">
     {name}
     <i onClick={onDelete} className="remove icon"></i>
+    <i className="pencil icon"></i>
   </span>
 )
 

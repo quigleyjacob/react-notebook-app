@@ -58,3 +58,6 @@ span.title {
 div.title:hover .remove.icon {
   display: inline-block;
 }
+div.title:hover .pencil.icon {
+  display: inline-block;
+}
