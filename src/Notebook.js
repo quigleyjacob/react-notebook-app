@@ -3,6 +3,7 @@ import NotebookForm from './NotebookForm';
 import NotebookItem from './NotebookItem';
 import {Accordion, Icon, Form, List} from 'semantic-ui-react';
 import DeleteModal from './DeleteModal';
+import EditModal from './EditModal';
 
 const notebookURL = '/api/notebooks/'
 const noteURL = '/api/notes/'
@@ -16,8 +17,10 @@ class Notebook extends Component {
       notebookId: '',
       noteForm: '',
       notes: [],
-      modal: false,
-      deleteId: ''
+      deleteModal: false,
+      deleteId: '',
+      editModal: false,
+      editId: ''
     }
 
     this.addNotebook = this.addNotebook.bind(this);
@@ -108,15 +111,29 @@ class Notebook extends Component {
 
   renderDeleteModal(id) {
     this.setState({
-      modal: true,
+      deleteModal: true,
       deleteId: id
     })
   }
 
   closeDeleteModal() {
     this.setState({
-      modal: false,
+      deleteModal: false,
       deleteId: ''
+    })
+  }
+
+  renderEditModal(id) {
+    this.setState({
+      editModal: true,
+      editId: id
+    })
+  }
+
+  closeEditModal() {
+    this.setState({
+      editModal: false,
+      editId: ''
     })
   }
 
@@ -145,6 +162,7 @@ class Notebook extends Component {
               name={n.name}
               onDelete={this.renderDeleteModal.bind(this, n._id)}
               onClick={this.getNotes.bind(this, n._id)}
+              onEdit={this.renderEditModal.bind(this, n._id)}
               />
             </Accordion.Title>
             <Accordion.Content active={activeIndex === index}>
@@ -166,7 +184,8 @@ class Notebook extends Component {
       <Accordion styled>
       {notebooks}
       </Accordion>
-      <DeleteModal modal={this.state.modal} close={this.closeDeleteModal.bind(this)} deleteNotebook={this.deleteNotebook.bind(this)} deleteId={this.state.deleteId}/>
+      <DeleteModal modal={this.state.deleteModal} close={this.closeDeleteModal.bind(this)} deleteNotebook={this.deleteNotebook.bind(this)} deleteId={this.state.deleteId}/>
+      <EditModal modal={this.state.editModal} close={this.closeEditModal.bind(this)}/>
       </div>
     )
   }
