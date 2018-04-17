@@ -2,6 +2,25 @@ import React, {Component} from 'react';
 import {Modal, Button, Form} from 'semantic-ui-react';
 
 class EditModal extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {editModalField: ''};
+    
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  
+  handleChange(e) {
+    this.setState({
+      editModalField: e.target.value
+    })
+  }
+  
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.editNotebook(this.props.editId, this.state.editModalField);
+    this.props.close();
+  }
 
   render() {
     return (
@@ -10,9 +29,12 @@ class EditModal extends Component {
             Edit your Notebook
           </Modal.Header>
           <Modal.Content>
-            <Form onSubmit={this.props.close}>
+            <Form onSubmit={this.handleSubmit}>
               <Form.Field>
-                <input placeholder="New Notebook Name" />
+                <input 
+                onChange={this.handleChange}
+                placeholder="New Notebook Name" 
+                />
               </Form.Field>
             </Form>
           </Modal.Content>

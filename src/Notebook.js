@@ -29,6 +29,7 @@ class Notebook extends Component {
     this.getNotes = this.getNotes.bind(this);
     this.closeDeleteModal = this.closeDeleteModal.bind(this);
     this.deleteNote = this.deleteNote.bind(this);
+    this.editNotebookName= this.editNotebookName.bind(this);
   }
 
   componentWillMount() {
@@ -55,6 +56,30 @@ class Notebook extends Component {
     })
     .then(resp => resp.json())
     .then(newNotebook => this.setState({notebooks: [...this.state.notebooks, newNotebook]}));
+  }
+  
+  editNotebookName(id, newName) {
+    fetch('/api/notebooks/' + id, {
+      method: "put",
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify({name: newName})
+    })
+    .then(resp => resp.json())
+    .then(() => {
+      for(let i = 0; i < this.state.notebooks.length; i++) {
+        if(this.state.notebooks[i]._id === id) {
+          const updated = this.state.notebooks[i];
+          updated.name = newName;
+          const notebooks = this.state.notebooks.filter(notebook => notebook._id !== id);
+          notebooks.push(updated);
+          this.setState({
+            notebooks: notebooks
+          })
+        }
+      }
+    })
   }
 
   deleteNotebook(id) {
@@ -152,7 +177,6 @@ class Notebook extends Component {
             </span>
 
             <i onClick={this.deleteNote.bind(this, k._id)} className="remove icon"></i>
-            <i className="pencil icon"></i>
             </List.Item>);
         });
         return (  <span key={n._id}>
@@ -185,7 +209,7 @@ class Notebook extends Component {
       {notebooks}
       </Accordion>
       <DeleteModal modal={this.state.deleteModal} close={this.closeDeleteModal.bind(this)} deleteNotebook={this.deleteNotebook.bind(this)} deleteId={this.state.deleteId}/>
-      <EditModal modal={this.state.editModal} close={this.closeEditModal.bind(this)}/>
+      <EditModal modal={this.state.editModal} close={this.closeEditModal.bind(this)} editNotebook={this.editNotebookName.bind(this)} editId={this.state.editId}/>
       </div>
     )
   }
