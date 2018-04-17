@@ -17,7 +17,9 @@ class Quill extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.getNoteById(nextProps.noteId);
+    if (nextProps.noteId.length > 0) {
+      this.getNoteById(nextProps.noteId);
+    }
   }
 
   getNoteById(id) {

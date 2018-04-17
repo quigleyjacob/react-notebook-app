@@ -4,7 +4,7 @@ import Notebook from './Notebook'
 import Nav from './Nav';
 import Login from './Login';
 import Register from './Register';
-import Quill from './Quill'
+import Quill from './Quill';
 
 class App extends Component {
   constructor(props) {
@@ -22,10 +22,15 @@ class App extends Component {
     this.registerPage = this.registerPage.bind(this);
     this.logout = this.logout.bind(this);
     this.getUsername = this.getUsername.bind(this);
+    this.fetchUsername = this.fetchUsername.bind(this);
   }
   componentDidMount() {
     this.setState({
       isLoggedIn: this.cookieToJSON(document.cookie).id ? true : false
+    }, () => {
+      if(this.state.isLoggedIn) {
+        this.fetchUsername();
+      }
     })
   }
   //https://stackoverflow.com/questions/5047346/converting-strings-like-document-cookie-to-objects
@@ -100,9 +105,18 @@ class App extends Component {
       isReturning: true
     })
   }
-  getUsername(name) {
+  getUsername(name) { // used when logging in a user
     this.setState({
       nameOfOpen: name
+    })
+  }
+  fetchUsername() { //used when a user is already logged in when opening the page
+    fetch('/api/users/' + this.cookieToJSON(document.cookie).id)
+    .then(resp => resp.json())
+    .then(found => {
+      if(found !== null) {
+        this.setState({nameOfOpen: found.firstName})
+      }
     })
   }
 
