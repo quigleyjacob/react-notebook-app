@@ -13,4 +13,7 @@ router.route('/:userId')
 router.route('/login')
   .post(helpers.loginUser)
 
+router.route('/confirm')
+  .post(helpers.confirmUser)
+
 module.exports = router;

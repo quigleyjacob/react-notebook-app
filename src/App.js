@@ -5,6 +5,7 @@ import Nav from './Nav';
 import Login from './Login';
 import Register from './Register';
 import Quill from './Quill';
+import UserInfoModal from './UserInfoModal';
 
 class App extends Component {
   constructor(props) {
@@ -13,7 +14,8 @@ class App extends Component {
       isReturning: true,
       isLoggedIn: false,
       nameOfOpen: '',
-      idOfOpenNote: ''
+      idOfOpenNote: '',
+      userInfoModal: false
     }
 
     this.toggleLoginRegister = this.toggleLoginRegister.bind(this);
@@ -24,7 +26,7 @@ class App extends Component {
     this.getUsername = this.getUsername.bind(this);
     this.fetchUsername = this.fetchUsername.bind(this);
   }
-  componentDidMount() {
+  componentDidMount() { //checks if user is logged in on page load
     this.setState({
       isLoggedIn: this.cookieToJSON(document.cookie).id ? true : false
     }, () => {
@@ -44,7 +46,7 @@ class App extends Component {
   	return result;
   }
 
-  getNoteOpen(id) {//returns is of opened note
+  getNoteOpen(id) {//sets id of opened note to be displayed
     this.setState({
       idOfOpenNote: id
     })
@@ -119,6 +121,51 @@ class App extends Component {
       }
     })
   }
+  
+  renderUserModal() {
+    this.setState({
+      userInfoModal: true
+    })
+  }
+  
+  closeUserModal() {
+    this.setState({
+      userInfoModal: false
+    })
+  }
+  
+  updateUser(obj) {
+    fetch('/api/users/confirm', {
+      method: "post",
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify(obj)
+    })
+    .then(resp => resp.json())
+    .then(message => {
+      if(message.message !== "success") {
+        fetch('/api/users/' + this.cookieToJSON(document.cookie).id, {
+          method: "put",
+          headers: new Headers({
+            'Content-Type': 'application/json'
+          }),
+          body: JSON.stringify(obj)
+        })
+        .then((resp) => resp.json())
+        .then(message => {
+            if(message.message === "success") {
+              alert("Password successfully changed");
+              this.closeUserModal();
+            } else {
+              alert("Could not change password");
+            }
+        });
+      } else {
+        alert(message.message);
+      }
+    })
+  }
 
   render() {
     const showApp = this.state.isLoggedIn ? this.loggedIn() : (this.state.isReturning ? this.isReturning() : this.isNew());
@@ -130,8 +177,10 @@ class App extends Component {
         register={this.registerPage}
         logout={this.logout}
         showUser={this.state.nameOfOpen}
+        userInfo={this.renderUserModal.bind(this)}
         />
         {showApp}
+        <UserInfoModal cookie={this.cookieToJSON(document.cookie).id} modal={this.state.userInfoModal} close={this.closeUserModal.bind(this)} updateUser={this.updateUser.bind(this)}/>
       </div>
     );
   }

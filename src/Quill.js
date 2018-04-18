@@ -33,27 +33,29 @@ class Quill extends Component {
   }
 
   updateText(id) {
-    fetch(noteURL + id, {
-      method: "put",
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      }),
-      body: JSON.stringify({body: this.state.text})
-    })
-    .then(resp => {
-      if(!resp.ok) {
-        if (resp.status >= 400 && resp.status < 500) {
-          return resp.json().then(data => {
-            let err = {errorMessage: data.message};
+    if(this.props.noteId) {
+      fetch(noteURL + id, {
+        method: "put",
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify({body: this.state.text})
+      })
+      .then(resp => {
+        if(!resp.ok) {
+          if (resp.status >= 400 && resp.status < 500) {
+            return resp.json().then(data => {
+              let err = {errorMessage: data.message};
+              throw err;
+            })
+          } else {
+            let err = {errorMessage: "Please try again later"};
             throw err;
-          })
-        } else {
-          let err = {errorMessage: "Please try again later"};
-          throw err;
+          }
         }
-      }
-      return resp.json();
-    })
+        return resp.json();
+      })
+    }
   }
 
   render() {

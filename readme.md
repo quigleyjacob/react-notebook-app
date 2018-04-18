@@ -15,7 +15,7 @@ By Jacob Quigley
 
 ##### Notebook Functionality (25)
 5pt: Users can create a new notebook  
-5pt: Users can save a notebook (After the fact, meant to put view instead of save here, sorry about that)  
+5pt: Users can view a notebook  
 5pt: Users can edit a notebook  
 5pt: Users can delete a notebook  
 2pt: Users can only view notebooks that they created  

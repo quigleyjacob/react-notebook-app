@@ -14,7 +14,7 @@ class Nav extends Component {
   loggedIn() {
     return (
       <div className="right menu" id="right-menu">
-        <a className="item" >{this.props.showUser}</a>
+        <a className="item" onClick={this.props.userInfo}>{this.props.showUser}</a>
         <a className="item" onClick={this.props.logout}>Logout</a>
       </div>
     );

@@ -49,13 +49,47 @@ exports.getUser = function(req, res){
 }
 
 exports.updateUser =  function(req, res){
-   db.User.findOneAndUpdate({_id: req.params.userId}, req.body, {new: true})
-   .then(function(user){
-       res.json(user);
-   })
-   .catch(function(err){
-       res.send(err);
-   })
+    if(req.body.newPassword) {
+      bcrypt.hash(req.body.newPassword, salt, function(err, hash) {
+        req.body.password = hash;
+        db.User.findOneAndUpdate({_id: req.params.userId}, req.body, {new: true})
+        .then(function(user){
+            res.json({"message": "success"});
+        })
+        .catch(function(err){
+            res.send(err);
+        })
+      })
+    } else {
+      db.User.findOneAndUpdate({_id: req.params.userId}, req.body, {new: true})
+      .then(function(user){
+          res.json(user);
+      })
+      .catch(function(err){
+          res.send(err);
+      })
+    }
+}
+
+exports.confirmUser = function(req, res) {
+  db.User.findById(req.body.userId)
+  .then(function(user) {
+    if(user !== null) {
+      bcrypt.compare(req.body.oldPassword, user.password, function(err, resp) {
+        if (err) {
+          res.json({"message": err})
+        } else {
+          if (resp) {
+            res.json({"message": "sucess"});
+          } else {
+            res.json({"message": "You did not enter the correct password"});
+          }
+        }
+      })
+    } else {
+      res.json({"message": "User not found"});
+    }
+  })
 }
 
 module.exports = exports;

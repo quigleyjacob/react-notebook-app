@@ -50,7 +50,7 @@ class Login extends Component {
               <input maxLength="40" type="email" name="email" placeholder="Email Address" required/>
             </div>
             <div className="field">
-              <input minLength="5" maxLength="20" type="password" name="password" placeholder="Password" required/>
+              <input type="password" name="password" placeholder="Password" required/>
             </div>
             <button className="ui primary basic button fluid">Login</button>
           </form>

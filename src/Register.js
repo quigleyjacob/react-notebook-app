@@ -67,10 +67,10 @@ class Register extends Component {
             <div className="field">
               <div className="two fields">
                 <div className="field">
-                  <input minLength="5" maxLength="20" type="password" name="password" placeholder="Password" required/>
+                  <input type="password" name="password" placeholder="Password" required/>
                 </div>
                 <div className="field">
-                  <input minLength="5" maxLength="20" type="password" name="passwordConf" placeholder="Re-enter Password" required/>
+                  <input type="password" name="passwordConf" placeholder="Re-enter Password" required/>
                 </div>
               </div>
             </div>
