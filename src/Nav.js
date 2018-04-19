@@ -2,6 +2,7 @@ import React, {Component} from "react";
 
 class Nav extends Component {
 
+  // two methods below are used to determine how the right menu of the website is rendered
   notLoggedIn() {
     return (
       <div className="right menu" id="right-menu">
@@ -10,7 +11,6 @@ class Nav extends Component {
       </div>
     );
   }
-
   loggedIn() {
     return (
       <div className="right menu" id="right-menu">

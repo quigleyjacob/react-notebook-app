@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 import {Modal, Button, Form} from 'semantic-ui-react';
 
+// this modal is the form to allow a user to update their information.
+// after considering what I want the user to be able to change, I think
+// it is best if the user cannot change their name or email, just their
+// password
+
 class UserInfoModal extends Component {
   constructor(props) {
     super(props);
@@ -17,6 +22,7 @@ class UserInfoModal extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // three methods below handle the state change for the three inputs in the form
   handleChangeOne(e) {
     this.setState({
       oldPassword: e.target.value

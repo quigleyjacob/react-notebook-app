@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import {Modal, Button} from 'semantic-ui-react';
 
+// this modal is called when a user clicks on the delete button for
+// any notebook, confirming that they do waant to delete it.
+
 class DeleteModal extends Component {
 
   render() {

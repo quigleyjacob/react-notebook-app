@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+// similar to login, this component is very easy to follow
+
 class Register extends Component {
   constructor() {
     super();

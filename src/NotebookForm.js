@@ -20,7 +20,9 @@ class NotebookForm extends Component {
   handleSubmit(e) {
     e.preventDefault();
     this.props.addNotebook(this.state.inputValue);
-    document.getElementById("notebook_form").reset();
+    this.setState({ //resets form
+      inputValue: ''
+    })
   }
 
   render() {

@@ -32,13 +32,13 @@ class Notebook extends Component {
     this.editNotebookName= this.editNotebookName.bind(this);
   }
 
-  componentWillMount() {
+  componentWillMount() { //get all notebooks associated with the currently logged in user
     fetch(notebookURL+"?q="+this.props.cookie(document.cookie).id)
     .then((resp) => resp.json())
     .then(notebooks => this.setState({notebooks: notebooks}));
   }
 
-  handleClick = (e, titleProps) => {
+  handleClick = (e, titleProps) => { // called when a notebook is clicked on, used to reveal the notes associated with that notebook
    const { index } = titleProps
    const { activeIndex } = this.state
    const newIndex = activeIndex === index ? -1 : index
@@ -46,7 +46,7 @@ class Notebook extends Component {
    this.setState({ activeIndex: newIndex })
  }
 
-  addNotebook(val) {
+  addNotebook(val) { //val is the name of the new notebook
     fetch(notebookURL, {
       method: "post",
       headers: new Headers({
@@ -58,7 +58,7 @@ class Notebook extends Component {
     .then(newNotebook => this.setState({notebooks: [...this.state.notebooks, newNotebook]}));
   }
   
-  editNotebookName(id, newName) {
+  editNotebookName(id, newName) { //is called when the modal form is submitted to alter name of notebook
     fetch('/api/notebooks/' + id, {
       method: "put",
       headers: new Headers({
@@ -68,7 +68,7 @@ class Notebook extends Component {
     })
     .then(resp => resp.json())
     .then(() => {
-      for(let i = 0; i < this.state.notebooks.length; i++) {
+      for(let i = 0; i < this.state.notebooks.length; i++) { //after the data is changed on the backend, this loop applies those changes to the client
         if(this.state.notebooks[i]._id === id) {
           const updated = this.state.notebooks[i];
           updated.name = newName;
@@ -97,7 +97,7 @@ class Notebook extends Component {
     }, this.getNotes(id))
   }
 
-  handleNoteFormValueChange(e) {
+  handleNoteFormValueChange(e) { //is called when the form to create a note is changed
     this.setState({
       noteForm: e.target.value
     })
@@ -112,11 +112,11 @@ class Notebook extends Component {
       body: JSON.stringify({name: this.state.noteForm, notebookId: this.state.notebookId, userId: this.props.cookie(document.cookie).id})
     })
     .then(resp => resp.json())
-    .then(newNote => this.setState({notes: [...this.state.notes, newNote]}));
+    .then(newNote => this.setState({notes: [...this.state.notes, newNote], noteForm: ''}));
   }
 
   getNotes(notebookId) {
-    this.setState({notebookId: notebookId}, () => {
+    this.setState({notebookId: notebookId, noteForm: ''}, () => {
       fetch(noteURL+"?q="+notebookId)
       .then((resp) => resp.json())
       .then(notes => (this.setState({notes: notes})));
@@ -134,27 +134,26 @@ class Notebook extends Component {
     .then(this.setState({notes: notes}))
   }
 
+  //next two methods apply to the showing of the delete modal
   renderDeleteModal(id) {
     this.setState({
       deleteModal: true,
       deleteId: id
     })
   }
-
   closeDeleteModal() {
     this.setState({
       deleteModal: false,
       deleteId: ''
     })
   }
-
+  // like the delete modal, these two are for the edit notebook namd modal
   renderEditModal(id) {
     this.setState({
       editModal: true,
       editId: id
     })
   }
-
   closeEditModal() {
     this.setState({
       editModal: false,
@@ -164,8 +163,8 @@ class Notebook extends Component {
 
   render() {
     const { activeIndex } = this.state;
-      const notebooks = this.state.notebooks.map((n, index) => {
-        const notes = this.state.notes.map(k => {
+      const notebooks = this.state.notebooks.map((n, index) => { //gets information to diaply the notebook
+        const notes = this.state.notes.map(k => { //gets information for all notes associated with the notebook
           return (
             <List.Item
             as='a'
@@ -192,7 +191,7 @@ class Notebook extends Component {
             <Accordion.Content active={activeIndex === index}>
               <Form size="mini" onSubmit={this.addNote} notebookid={n._id}>
               <Form.Field>
-              <input ref="new_note" placeholder="New Note" onChange={this.handleNoteFormValueChange}/>
+              <input value={this.state.noteForm} ref="new_note" placeholder="New Note" onChange={this.handleNoteFormValueChange}/>
               </Form.Field>
               </Form>
               <List>
@@ -201,7 +200,6 @@ class Notebook extends Component {
             </Accordion.Content>
           </span> )
       })
-
     return (
       <div>
       <NotebookForm addNotebook={this.addNotebook}/>

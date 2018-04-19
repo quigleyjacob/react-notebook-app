@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+//should be pretty self explantory what all the functions in here do
+
 class Login extends Component {
   constructor(props) {
     super(props);

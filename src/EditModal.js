@@ -1,15 +1,18 @@
 import React, {Component} from 'react';
 import {Modal, Button, Form} from 'semantic-ui-react';
 
+// this modal is called when a user clicks on the pencil icon for a notebook,
+// so they can change the name of the corresponding notebook
+
 class EditModal extends Component {
   constructor(props) {
     super(props);
     this.state = {editModalField: ''};
-    
+
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  
+
   handleChange(e) {
     this.setState({
       editModalField: e.target.value
@@ -31,9 +34,9 @@ class EditModal extends Component {
           <Modal.Content>
             <Form onSubmit={this.handleSubmit}>
               <Form.Field>
-                <input 
+                <input
                 onChange={this.handleChange}
-                placeholder="New Notebook Name" 
+                placeholder="New Notebook Name"
                 />
               </Form.Field>
             </Form>

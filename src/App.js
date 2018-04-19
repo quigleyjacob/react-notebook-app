@@ -51,6 +51,7 @@ class App extends Component {
       idOfOpenNote: id
     })
   }
+  //the two methods below toggle some boolean variables to determine if login, register, or main page is displayed
   toggleLoginRegister() {
     this.setState({
       isReturning: !this.state.isReturning
@@ -62,6 +63,7 @@ class App extends Component {
     })
   }
 
+  //based on the boolean methods above, these three methods display one of those options
   isNew() {
     return (
       <div className="App">
@@ -121,21 +123,21 @@ class App extends Component {
       }
     })
   }
-  
+  //two methods for dealing with the opening and closing to modal to reset password
   renderUserModal() {
     this.setState({
       userInfoModal: true
     })
   }
-  
   closeUserModal() {
     this.setState({
       userInfoModal: false
     })
   }
   
+  //called when a submits the form to update password
   updateUser(obj) {
-    fetch('/api/users/confirm', {
+    fetch('/api/users/confirm', { //first, we need to verify that this is the correct user
       method: "post",
       headers: new Headers({
         'Content-Type': 'application/json'
@@ -145,7 +147,7 @@ class App extends Component {
     .then(resp => resp.json())
     .then(message => {
       if(message.message !== "success") {
-        fetch('/api/users/' + this.cookieToJSON(document.cookie).id, {
+        fetch('/api/users/' + this.cookieToJSON(document.cookie).id, { //then we change the password
           method: "put",
           headers: new Headers({
             'Content-Type': 'application/json'

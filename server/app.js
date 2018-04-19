@@ -1,8 +1,17 @@
+// 100% disclosure, the overall setup for the backend of this app was
+// inspired by The Advanced Web Developers Bootcamp on Udemy. The code
+// for this particular project can be found here: https://ide.c9.io/learnwithcolt/wdb-part2
+
+// And the backend can be foudn under the file 'todos_api' (and you'll need a C9 account to view)
+
 var express = require('express'),
     app = express(),
     port = process.env.PORT || 8000,
     bodyParser = require('body-parser');
 
+// I have three routes to connect to each of the data types that I keep in the database
+// and then each route is aided by a helper file that contains all the methods I use to
+// peform back end work
 var notebookRoutes = require("./routes/notebooks");
 var userRoutes = require('./routes/users');
 var noteRoutes = require('./routes/notes');
