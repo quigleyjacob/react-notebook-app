@@ -63,16 +63,32 @@ div.title:hover .remove.icon {
 div.title:hover .pencil.icon {
   display: inline-block;
 }
+li:hover .remove.icon {
+  display: inline-block;
+}
 
 .gadget {
   background-color: white;
-  height: 10rem;
-  max-height: 10rem;
+  height: 15rem;
+  max-height: 15rem;
   padding: 10px;
 }
 
 #react-image {
-  height: 9.9rem;
+  height: 15rem;
   width: 100rem;
   text-align: center;
+}
+
+ul {
+  padding: 0;
+    width:100%;
+    margin-left: 10px;
+    margin-bottom: 0
+}
+
+li {
+    list-style-type: none;
+    display: inline-block;
+    margin-right: 20px;
 }

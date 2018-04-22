@@ -6,8 +6,8 @@ import Login from './Login';
 import Register from './Register';
 import Quill from './Quill';
 import UserInfoModal from './UserInfoModal';
-import Gadgets from './Gadgets';
 import { Grid } from 'semantic-ui-react';
+import Todo from './Todo';
 
 class App extends Component {
   constructor(props) {
@@ -93,7 +93,7 @@ class App extends Component {
         </Grid.Row>
         <Grid.Row columns={2}>
           <Grid.Column width={4}>
-          <Gadgets cookie={this.cookieToJSON}/>
+          <Todo cookie={this.cookieToJSON}/>
           </Grid.Column>
           <Grid.Column width={12}>
             <img alt="React banner" id="react-image" src='https://www.mycode.website/wp-content/uploads/2017/03/ReactBannerProject.png' />
