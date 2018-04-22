@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import TodoForm from './TodoForm';
-// import TodoList from './TodoList';
 
 const URL = '/api/todos/'
 
@@ -36,17 +35,36 @@ class Todo extends Component {
     .then(newTodo => this.setState({todos: [...this.state.todos, newTodo]}));
   }
 
-  deleteTodo(id) {
+  deleteTodo(id) { //deletes a todo permanently when the x is clicked
     const todos = this.state.todos.filter(todo => todo._id !== id);
     fetch(URL + id, {method: "delete"})
     .then(resp => resp.json())
     .then(this.setState({todos: todos}))
   }
 
+  toggleTodo(item) { //puts a srike through the text of a todo when the text is clicked
+    fetch(URL + item._id, {
+      method: "put",
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify({completed: !item.completed})
+    })
+    .then(resp => resp.json())
+    const todos = this.state.todos.map(t =>
+      (t._id === item._id) ? {...t, completed: !t.completed} : t
+    );
+    this.setState({todos: todos})
+  }
+
   render() {
     const items = this.state.todos.map(item => (
       <li key={item._id}>
-      <span>{item.name}</span>
+      <span
+      style={{
+        textDecoration: item.completed ? 'line-through' : 'none'
+      }}
+      onClick={this.toggleTodo.bind(this, item)}>{item.name}</span>
       <i onClick={this.deleteTodo.bind(this, item._id)} className="remove icon"></i>
       </li>
     ));

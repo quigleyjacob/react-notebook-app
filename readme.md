@@ -36,7 +36,10 @@ By Jacob Quigley
 1pt: Site is visually appealing  
 
 ##### Creative Portion (20)
-20pt: I have implemented an API called Quill.js that allows for extra formatting associated with a rich text editor. Also, I restructured the data for the app, now allowing notebooks to have a collection of notes instead. Finally, I implemented modals to be used as an extra step for caution for a user to delete notes.  
+1. I have implemented an API called Quill.js that allows for extra formatting associated with a rich text editor.  
+2. Also, I restructured the data for the app, now allowing notebooks to have a collection of notes instead.  
+3. I implemented modals to be used as an extra step for caution for a user to delete notes.  
+4. Finally, because I ran out of ideas, there is a todo gadget on the page as well  
 
 #### TA Approval
 Approved By: Connor Stevens
