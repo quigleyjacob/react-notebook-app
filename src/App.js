@@ -6,6 +6,8 @@ import Login from './Login';
 import Register from './Register';
 import Quill from './Quill';
 import UserInfoModal from './UserInfoModal';
+import Gadgets from './Gadgets';
+import { Grid } from 'semantic-ui-react';
 
 class App extends Component {
   constructor(props) {
@@ -80,14 +82,24 @@ class App extends Component {
   }
   loggedIn() {
     return (
-      <div className="App ui celled grid">
-        <div className="four wide column">
-        <Notebook onNoteOpen={this.getNoteOpen.bind(this)} cookie={this.cookieToJSON}/>
-        </div>
-        <div className="twelve wide column document">
-          <Quill noteId={this.state.idOfOpenNote}/>
-        </div>
-      </div>
+      <Grid padded className='App document'>
+        <Grid.Row columns={2}>
+          <Grid.Column width={4}>
+            <Notebook onNoteOpen={this.getNoteOpen.bind(this)} cookie={this.cookieToJSON}/>
+          </Grid.Column>
+          <Grid.Column width={12}>
+            <Quill noteId={this.state.idOfOpenNote}/>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row columns={2}>
+          <Grid.Column width={4}>
+          <Gadgets cookie={this.cookieToJSON}/>
+          </Grid.Column>
+          <Grid.Column width={12}>
+            <img alt="React banner" id="react-image" src='https://www.mycode.website/wp-content/uploads/2017/03/ReactBannerProject.png' />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     );
   }
   loginPage() {
@@ -134,7 +146,7 @@ class App extends Component {
       userInfoModal: false
     })
   }
-  
+
   //called when a submits the form to update password
   updateUser(obj) {
     fetch('/api/users/confirm', { //first, we need to verify that this is the correct user

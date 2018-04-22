@@ -1,5 +1,7 @@
 .App {
   margin-top: 50px;
+  padding: 20px;
+  margin-top: 1rem;
   /* text-align: center; */
 }
 
@@ -60,4 +62,17 @@ div.title:hover .remove.icon {
 }
 div.title:hover .pencil.icon {
   display: inline-block;
+}
+
+.gadget {
+  background-color: white;
+  height: 10rem;
+  max-height: 10rem;
+  padding: 10px;
+}
+
+#react-image {
+  height: 9.9rem;
+  width: 100rem;
+  text-align: center;
 }
