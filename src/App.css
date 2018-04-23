@@ -92,3 +92,7 @@ li {
     display: inline-block;
     margin-right: 20px;
 }
+
+span.note:hover {
+  cursor:pointer;
+}

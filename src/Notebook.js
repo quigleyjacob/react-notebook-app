@@ -184,7 +184,7 @@ class Notebook extends Component {
         const notes = this.state.notes.map(k => { //gets information for all notes associated with the notebook
           return (
             <List.Item
-            as='a'
+            as='span'
             key={k._id}
             className="note"
             >
@@ -195,7 +195,7 @@ class Notebook extends Component {
             <i onClick={this.deleteNote.bind(this, k._id)} className="remove icon"></i>
             </List.Item>);
         });
-        return (  <span key={n._id}>
+        return (  <div key={n._id}>
             <Accordion.Title active={activeIndex === index} index={index} onClick={this.handleClick}>
               <Icon onClick={this.getNotes.bind(this, n._id)} name='dropdown' />
               <NotebookItem
@@ -206,7 +206,7 @@ class Notebook extends Component {
               />
             </Accordion.Title>
             <Accordion.Content active={activeIndex === index}>
-              <Form size="mini" onSubmit={this.addNote} notebookid={n._id}>
+              <Form size="mini" onSubmit={this.addNote}>
               <Form.Field>
               <input maxLength="20" value={this.state.noteForm} ref="new_note" placeholder="New Note" onChange={this.handleNoteFormValueChange}/>
               </Form.Field>
@@ -215,7 +215,7 @@ class Notebook extends Component {
               {notes}
               </List>
             </Accordion.Content>
-          </span> )
+          </div> )
       })
     return (
       <div>
