@@ -32,7 +32,7 @@ exports.getTodo = function(req, res){
 }
 
 exports.updateTodo =  function(req, res){
-   db.Todo.findOneAndUpdate({_id: req.params.todoId}, req.body, {new: true})
+   db.Todo.findOneAndUpdate({_id: req.params.todoId, authorId: req.body.userId}, req.body, {new: true})
    .then(function(todo){
        res.json(todo);
    })
@@ -42,7 +42,7 @@ exports.updateTodo =  function(req, res){
 }
 
 exports.deleteTodo = function(req, res){
-   db.Todo.remove({_id: req.params.todoId})
+   db.Todo.remove({_id: req.params.todoId, authorId: req.body.userId})
    .then(function(){
        res.json({message: 'We deleted it!'});
    })

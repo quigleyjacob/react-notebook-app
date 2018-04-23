@@ -38,7 +38,7 @@ exports.updateNotebook =  function(req, res){
   if(req.body.name.length > 20) {
     req.body.name = req.body.name.substr(0,20);
   }
-   db.Notebook.findOneAndUpdate({_id: req.params.notebookId}, req.body, {new: true})
+   db.Notebook.findOneAndUpdate({_id: req.params.notebookId, userId: req.body.userId}, req.body, {new: true})
    .then(function(notebook){
        res.json(notebook);
    })
@@ -48,7 +48,7 @@ exports.updateNotebook =  function(req, res){
 }
 
 exports.deleteNotebook = function(req, res){
-   db.Notebook.remove({_id: req.params.notebookId})
+   db.Notebook.remove({_id: req.params.notebookId, userId: req.body.userId})
    .then(function(){
        res.json({message: 'We deleted it!'});
    })

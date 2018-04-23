@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ReactQuill from 'react-quill';
 // I spent a lot of time trying to create my own rich text editor, but
-// I figured out that making such a thing was going to much a lot of 
+// I figured out that making such a thing was going to much a lot of
 // work, so I am using a package called Quill.js to handle that
 
 const noteURL = '/api/notes/';
@@ -41,7 +41,7 @@ class Quill extends Component {
         headers: new Headers({
           'Content-Type': 'application/json'
         }),
-        body: JSON.stringify({body: this.state.text})
+        body: JSON.stringify({body: this.state.text, userId: this.props.cookie(document.cookie).id})
       })
       .then(resp => {
         if(!resp.ok) {

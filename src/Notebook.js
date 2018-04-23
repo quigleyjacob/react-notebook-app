@@ -64,7 +64,7 @@ class Notebook extends Component {
       headers: new Headers({
         'Content-Type': 'application/json'
       }),
-      body: JSON.stringify({name: newName})
+      body: JSON.stringify({name: newName, userId: this.props.cookie(document.cookie).id})
     })
     .then(resp => resp.json())
     .then(name => {
@@ -86,7 +86,13 @@ class Notebook extends Component {
 
   deleteNotebook(id) {
     const notebooks = this.state.notebooks.filter(notebook => notebook._id !== id);
-    fetch(notebookURL + id, {method: "delete"})
+    fetch(notebookURL + id, {
+      method: "delete",
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify({userId: this.props.cookie(document.cookie).id})
+    })
     .then(resp => resp.json())
     .then(this.setState({notebooks: notebooks}))
     this.closeDeleteModal();
@@ -131,10 +137,18 @@ class Notebook extends Component {
   }
 
   deleteNote(id) {
-    const notes = this.state.notes.filter(note => note._id !== id);
-    fetch(noteURL + id, {method: "delete"})
+    fetch(noteURL + id,{
+      method: "delete",
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify({userId: this.props.cookie(document.cookie).id})
+    })
     .then(resp => resp.json())
-    .then(this.setState({notes: notes}))
+    .then(() => {
+      const notes = this.state.notes.filter(note => note._id !== id);
+      this.setState({notes: notes})
+    })
   }
 
   //next two methods apply to the showing of the delete modal

@@ -88,7 +88,7 @@ class App extends Component {
             <Notebook onNoteOpen={this.getNoteOpen.bind(this)} cookie={this.cookieToJSON}/>
           </Grid.Column>
           <Grid.Column width={12}>
-            <Quill noteId={this.state.idOfOpenNote}/>
+            <Quill cookie={this.cookieToJSON} noteId={this.state.idOfOpenNote}/>
           </Grid.Column>
         </Grid.Row>
         <Grid.Row columns={2}>

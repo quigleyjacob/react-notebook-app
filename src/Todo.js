@@ -37,7 +37,13 @@ class Todo extends Component {
 
   deleteTodo(id) { //deletes a todo permanently when the x is clicked
     const todos = this.state.todos.filter(todo => todo._id !== id);
-    fetch(URL + id, {method: "delete"})
+    fetch(URL + id, {
+      method: "delete",
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify({userId: this.props.cookie(document.cookie).id})
+    })
     .then(resp => resp.json())
     .then(this.setState({todos: todos}))
   }
@@ -48,7 +54,7 @@ class Todo extends Component {
       headers: new Headers({
         'Content-Type': 'application/json'
       }),
-      body: JSON.stringify({completed: !item.completed})
+      body: JSON.stringify({completed: !item.completed, userId: this.props.cookie(document.cookie).id})
     })
     .then(resp => resp.json())
     const todos = this.state.todos.map(t =>

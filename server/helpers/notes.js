@@ -32,8 +32,8 @@ exports.getNote = function(req, res){
    })
 }
 
-exports.updateNote =  function(req, res){
-   db.Note.findOneAndUpdate({_id: req.params.noteId}, req.body, {new: true})
+exports.updateNote = function(req, res){
+   db.Note.findOneAndUpdate({_id: req.params.noteId, userId: req.body.userId}, req.body, {new: true})
    .then(function(note){
        res.json(note);
    })
@@ -43,7 +43,7 @@ exports.updateNote =  function(req, res){
 }
 
 exports.deleteNote = function(req, res){
-   db.Note.remove({_id: req.params.noteId})
+   db.Note.remove({_id: req.params.noteId, userId: req.body.userId})
    .then(function(){
        res.json({message: 'We deleted it!'});
    })
