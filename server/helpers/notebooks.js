@@ -12,6 +12,9 @@ exports.getNotebooks = function(req, res){
 }
 
 exports.createNotebook = function(req, res){
+  if(req.body.name.length > 20) {
+    req.body.name = req.body.name.substr(0,20);
+  }
   db.Notebook.create(req.body)
   .then(function(newNotebook){
       res.status(201).json(newNotebook);
@@ -32,6 +35,9 @@ exports.getNotebook = function(req, res){
 }
 
 exports.updateNotebook =  function(req, res){
+  if(req.body.name.length > 20) {
+    req.body.name = req.body.name.substr(0,20);
+  }
    db.Notebook.findOneAndUpdate({_id: req.params.notebookId}, req.body, {new: true})
    .then(function(notebook){
        res.json(notebook);

@@ -1,7 +1,6 @@
 var db = require('../models');
 
 exports.getNotes = function(req, res){
-  // console.log(req.query.q);
     db.Note.find()
     .then(function(notes){
         let myNotes = notes.filter(note => note.notebookId === req.query.q);
@@ -13,6 +12,7 @@ exports.getNotes = function(req, res){
 }
 
 exports.createNote = function(req, res){
+  req.body.name = req.body.name.substr(0, 20);
   db.Note.create(req.body)
   .then(function(newNote){
       res.status(201).json(newNote);

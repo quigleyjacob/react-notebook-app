@@ -18,7 +18,7 @@ class EditModal extends Component {
       editModalField: e.target.value
     })
   }
-  
+
   handleSubmit(e) {
     e.preventDefault();
     this.props.editNotebook(this.props.editId, this.state.editModalField);
@@ -35,6 +35,7 @@ class EditModal extends Component {
             <Form onSubmit={this.handleSubmit}>
               <Form.Field>
                 <input
+                maxLength="20"
                 onChange={this.handleChange}
                 placeholder="New Notebook Name"
                 />

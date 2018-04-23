@@ -57,7 +57,7 @@ class Notebook extends Component {
     .then(resp => resp.json())
     .then(newNotebook => this.setState({notebooks: [...this.state.notebooks, newNotebook]}));
   }
-  
+
   editNotebookName(id, newName) { //is called when the modal form is submitted to alter name of notebook
     fetch('/api/notebooks/' + id, {
       method: "put",
@@ -67,18 +67,20 @@ class Notebook extends Component {
       body: JSON.stringify({name: newName})
     })
     .then(resp => resp.json())
-    .then(() => {
+    .then(name => {
+      let notebooks = [];
       for(let i = 0; i < this.state.notebooks.length; i++) { //after the data is changed on the backend, this loop applies those changes to the client
         if(this.state.notebooks[i]._id === id) {
           const updated = this.state.notebooks[i];
-          updated.name = newName;
-          const notebooks = this.state.notebooks.filter(notebook => notebook._id !== id);
+          updated.name = name.name;
           notebooks.push(updated);
-          this.setState({
-            notebooks: notebooks
-          })
+        } else {
+          notebooks.push(this.state.notebooks[i])
         }
       }
+      this.setState({
+        notebooks: notebooks
+      })
     })
   }
 
@@ -104,12 +106,13 @@ class Notebook extends Component {
   }
 
   addNote(e) {
+    let header="<h1>"+this.state.noteForm+"</h1>"
     fetch(noteURL, {
       method: "post",
       headers: new Headers({
         'Content-Type': 'application/json'
       }),
-      body: JSON.stringify({name: this.state.noteForm, notebookId: this.state.notebookId, userId: this.props.cookie(document.cookie).id})
+      body: JSON.stringify({name: this.state.noteForm, notebookId: this.state.notebookId, userId: this.props.cookie(document.cookie).id, body: header})
     })
     .then(resp => resp.json())
     .then(newNote => this.setState({notes: [...this.state.notes, newNote], noteForm: ''}));
@@ -191,7 +194,7 @@ class Notebook extends Component {
             <Accordion.Content active={activeIndex === index}>
               <Form size="mini" onSubmit={this.addNote} notebookid={n._id}>
               <Form.Field>
-              <input value={this.state.noteForm} ref="new_note" placeholder="New Note" onChange={this.handleNoteFormValueChange}/>
+              <input maxLength="20" value={this.state.noteForm} ref="new_note" placeholder="New Note" onChange={this.handleNoteFormValueChange}/>
               </Form.Field>
               </Form>
               <List>

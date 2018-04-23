@@ -3,7 +3,11 @@ var bcrypt = require('bcrypt');
 const salt = 10;
 
 exports.createUser = function(req, res){
-  if (req.body.password !== req.body.passwordConf) {
+  let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  if (req.body.email.search(emailRegex) < 0) {
+    res.json({"message": "Not a valid email address"})
+  }
+  else if (req.body.password !== req.body.passwordConf) {
     res.json({"message": "Passwords do not match"});
   } else {
     bcrypt.hash(req.body.password, salt, function(err, hash) {
@@ -20,6 +24,10 @@ exports.createUser = function(req, res){
 }
 
 exports.loginUser = function(req, res) {
+  let emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  if (req.body.email.search(emailRegex) < 0) {
+    res.json({"message": "Not a valid email address"})
+  }
   db.User.findOne({email: req.body.email})
   .then(resp => {
     (resp !== null) ?
